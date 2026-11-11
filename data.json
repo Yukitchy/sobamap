@@ -97,22 +97,6 @@
    "memo": "お盆の札に店名が写っていた。ピリ辛温玉つけ汁が名物。"
   },
   {
-   "id": "hikari-tokyo-nishiikebukuro",
-   "name": "カレーうどん ひかり TOKYO",
-   "status": "visited",
-   "type": "udon",
-   "style": null,
-   "area": "西池袋",
-   "address": "東京都豊島区西池袋3-22-8",
-   "lat": 35.73028,
-   "lng": 139.70628,
-   "visit_date": "2025-05-22",
-   "dish": "カツカレーうどん",
-   "rating": null,
-   "photo": "",
-   "memo": "写真のGPSが店舗住所とほぼ一致。居酒屋風の店内。※食べログでは2026-05-20閉店と記載。"
-  },
-  {
    "id": "nakashoya-kawagoe",
    "name": "中正屋",
    "status": "visited",
