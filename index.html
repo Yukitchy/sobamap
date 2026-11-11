@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sobamap — そば・うどん記録</title>
+<meta name="description" content="行ったそば・うどんの店の記録と、行きたい店のリストを地図で見るための個人マップ。">
+<meta property="og:title" content="Sobamap">
+<meta property="og:description" content="そば・うどんの「行った店」と「行きたい店」を一枚の地図に。">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 fill=%22%2338271A%22/%3E%3Ccircle cx=%2232%22 cy=%2232%22 r=%2213%22 fill=%225C7231%22/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Noto+Sans+JP:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4EDDC;--ink:#38271A;--ac:#5C7231;--ac2:#D9B36A;--wish:#A9711F;--mu:#7A6A55;--card:#FFFBF2;--mapbg:#EFE5CB}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);color-scheme:light;font:16px/1.5 Archivo,"Noto Sans JP",sans-serif}
+.col{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3,.big,.tn,.no{font-family:Archivo,"Noto Sans JP",sans-serif;font-stretch:62%;font-weight:900;letter-spacing:-.01em;text-transform:uppercase}
+.top{display:flex;justify-content:space-between;font-weight:800;font-size:13px;letter-spacing:.14em;padding:18px 0 8px;border-bottom:4px solid var(--ink)}
+h1{margin:14px 0 4px;font-size:clamp(46px,13vw,74px);line-height:.92}
+h1 em{font-style:normal;color:var(--ac);border-bottom:.06em solid var(--ac);padding-bottom:.02em}
+.lead{margin:0 0 14px;font-size:14px;font-weight:700;color:var(--mu)}
+.hb{background:var(--ink);color:#FFFBF2;display:flex;justify-content:space-between;gap:10px;padding:13px 16px;font-weight:800;font-size:14px;letter-spacing:.05em;text-transform:uppercase}
+.hb b{color:var(--ac2)}
+/* filter chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+.chip{font:800 13px/1 Archivo,"Noto Sans JP",sans-serif;letter-spacing:.06em;padding:11px 14px;border:2px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:#FFFBF2}
+.chip .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:1px}
+.chipnote{margin:8px 0 0;font-size:13px;color:var(--mu);font-weight:700}
+/* map */
+.maphd{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:26px 0 10px}
+h2.map{margin:0;font-size:32px}
+#map{display:block;width:100%;height:auto;border:4px solid var(--ink);background:var(--mapbg)}
+#map text{font-family:Archivo,"Noto Sans JP",sans-serif;pointer-events:none}
+.pin{cursor:pointer}
+.pin .lbl{display:none}
+.pin:hover .lbl,.pin:focus .lbl,.pin.on .lbl{display:block}
+.pin.off{display:none}
+.lg{display:flex;gap:16px;flex-wrap:wrap;margin:8px 0 0;font-size:14px;font-weight:700}
+.lg i{display:inline-block;width:14px;height:14px;margin-right:6px;vertical-align:-2px}
+.lg i.v{background:var(--ac)}
+.lg i.w{background:var(--card);border:2px solid var(--wish);width:10px;height:10px}
+/* sections + cards */
+.bar{display:flex;justify-content:space-between;align-items:baseline;margin:34px 0 4px}
+.bar h2{margin:0;font-size:29px}
+.bar.w h2{color:var(--wish)}
+.bar span{font-weight:800;font-size:15px}
+.gp{margin:0 0 12px;font-size:14px;color:var(--mu)}
+.card{padding:22px 0 24px;border-bottom:4px solid var(--ink);scroll-margin-top:8px}
+.card.off{display:none}
+.card.hit{outline:4px solid var(--ac);outline-offset:6px}
+.hd{display:flex;gap:12px;align-items:center;margin-bottom:10px}
+.big{font-size:64px;line-height:.85;color:var(--ac)}
+.card.w .big{color:var(--ink)}
+.hd h3{margin:6px 0 0;font-size:23px;line-height:1.15;text-transform:none;font-stretch:100%}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.genre{display:inline-block;background:var(--ac);color:#fff;font:900 13px/1 Archivo,"Noto Sans JP",sans-serif;letter-spacing:.08em;padding:6px 9px}
+.genre.u{background:#6B4226}
+.style{display:inline-block;background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink);font:900 13px/1 Archivo,"Noto Sans JP",sans-serif;letter-spacing:.08em;padding:6px 9px}
+.status{display:inline-block;background:var(--ac);color:#fff;font:900 13px/1 Archivo,"Noto Sans JP",sans-serif;letter-spacing:.08em;padding:6px 9px}
+.card.w .status{background:var(--wish)}
+.ph{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;margin-bottom:12px}
+.tx{margin:0 0 10px;font-size:16px}
+.addr{margin:0 0 10px;font-size:13px;color:var(--mu)}
+.strip{display:flex;flex-wrap:wrap;gap:4px 0;margin:0;background:var(--ink);color:#FFFBF2;padding:9px 10px;font-size:14px;font-weight:700;line-height:1.35}
+.strip span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.strip span+span:before{content:"";display:inline-block;width:4px;height:4px;background:var(--ac2);margin:0 8px;flex:none}
+.strip .star{color:var(--ac2);letter-spacing:.08em}
+.bt{display:flex;gap:6px;margin-top:10px}
+.bt>*{flex:1 1 0;min-width:0}
+.btn{display:flex;align-items:center;justify-content:center;gap:6px;min-height:46px;padding:0 8px;background:var(--ink);color:#fff;text-decoration:none;font:800 13px Archivo,"Noto Sans JP",sans-serif;letter-spacing:.04em;border:0;cursor:pointer;white-space:nowrap}
+.btn i{font-style:normal;color:var(--ac2)}
+.empty{padding:18px 0;font-weight:700;color:var(--mu)}
+/* about + credits */
+.know{background:var(--ink);color:#FFFBF2;margin-top:38px;padding:30px 0 34px}
+.know h2{margin:0 0 10px;font-size:32px;color:#FFFBF2}
+.know p{margin:0 0 8px;font-size:15px}
+.know code{background:#59432C;padding:1px 6px;font-size:13px}
+.crd{max-width:640px;margin:0 auto;padding-block:18px 44px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.cr{padding:8px 0 0;font-size:13px;color:var(--mu)}
+.loadmsg{padding:26px 0;font-weight:700;color:var(--mu)}
+@media(min-width:700px){.col{max-width:760px}.crd{max-width:760px}}
+</style>
+</head>
+<body>
+<div class="col">
+  <div class="top"><span>Sobamap</span><span>そば・うどん記録</span></div>
+  <h1>Soba<em>map</em></h1>
+  <p class="lead">行った店のレポと、まだ行っていない店のリストを、一枚の地図で。</p>
+  <div class="hb"><span>訪問済み <b id="cnt-v">–</b></span><span>行きたい <b id="cnt-w">–</b></span><span>全 <b id="cnt-t">–</b> 軒</span></div>
+
+  <div class="chips" id="chips" role="group" aria-label="絞り込み">
+    <button class="chip" data-clear="1" aria-pressed="true">すべて</button>
+    <button class="chip" data-type="soba" aria-pressed="false"><span class="dot" style="background:var(--ac)"></span>そば</button>
+    <button class="chip" data-type="udon" aria-pressed="false"><span class="dot" style="background:#6B4226"></span>うどん</button>
+    <button class="chip" data-style="standing" aria-pressed="false">立ち食い</button>
+    <button class="chip" data-style="seated" aria-pressed="false">着席</button>
+  </div>
+  <p class="chipnote" id="chipnote"></p>
+
+  <div class="maphd"><h2 class="map">The map</h2></div>
+  <svg id="map" viewBox="0 0 600 540" role="img" aria-label="神保町・神田・御茶ノ水エリアのそば・うどん店スケッチマップ"></svg>
+  <div class="lg"><span><i class="v"></i>訪問済み</span><span><i class="w"></i>行きたい</span><span>ピンの番号は下のリストと共通</span></div>
+
+  <div id="sections"><p class="loadmsg">読み込み中…</p></div>
+</div>
+
+<div class="know"><div class="col">
+  <h2>About</h2>
+  <p>店の追加・編集は <code>data.json</code> の <code>shops</code> に1件足すだけ。状態は <code>visited</code>（訪問済み）／<code>wishlist</code>（行きたい）、種別は <code>soba</code>／<code>udon</code>、形式は <code>standing</code>（立ち食い）／<code>seated</code>（着席）。</p>
+  <p>行った店には訪問日・食べた一杯・星評価・ひとことレポを残す。行きたい店には「なぜ気になるか」を書いておく。</p>
+</div></div>
+
+<div class="crd"><p class="cr">座標は住所をもとに国土地理院の住所検索で確認（番地レベル）。営業時間・定休日は変わることがあるので、行く前に公式情報の確認を。Sobamap は個人の記録用アプリです。</p></div>
+
+<script>
+const BOUNDS = {lngMin: 139.7555, lngMax: 139.7685, latMin: 35.6930, latMax: 35.7028};
+const W = 600, H = 540;
+const px = lng => 26 + (lng - BOUNDS.lngMin) / (BOUNDS.lngMax - BOUNDS.lngMin) * (W - 52);
+const py = lat => (H - 30) - (lat - BOUNDS.latMin) / (BOUNDS.latMax - BOUNDS.latMin) * (H - 60);
+const STATIONS = [
+  {name: "神保町駅", lat: 35.69588, lng: 139.75755, dx: -34},
+  {name: "御茶ノ水駅", lat: 35.69942, lng: 139.76502}
+];
+let SHOPS = [], onPin = null;
+const fType = new Set(), fStyle = new Set();
+const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const stars = r => (typeof r === "number" && r >= 1 && r <= 5) ? "★★★★★".slice(0, r) + "☆☆☆☆☆".slice(0, 5 - r) : "—";
+
+function mapSVG() {
+  let g = "";
+  // blocks + roads (Eatmap-style sketch grid)
+  g += `<rect width="${W}" height="${H}" fill="#EFE5CB"/>`;
+  for (let x = 84; x < W; x += 104) g += `<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="#FFFBF2" stroke-width="15"/>`;
+  for (let y = 76; y < H; y += 104) g += `<line x1="0" y1="${y}" x2="${W}" y2="${y}" stroke="#FFFBF2" stroke-width="15"/>`;
+  // Kanda river hint
+  g += `<path d="M0 ${py(35.7006)} C 180 ${py(35.7016)}, 380 ${py(35.6998)}, ${W} ${py(35.7012)}" fill="none" stroke="#B9CBD8" stroke-width="10" opacity=".65"/>`;
+  // dashed circle around the Jimbocho cluster
+  const cx = px(139.7590), cy = py(35.6972);
+  g += `<circle cx="${cx}" cy="${cy}" r="128" fill="none" stroke="#38271A" stroke-width="2" stroke-dasharray="7 6"/>`;
+  g += `<text x="${cx + 46}" y="${H - 12}" text-anchor="middle" font-size="12.5" font-weight="700" fill="#7A6A55">破線の内側：神保町・神田の密集エリア</text>`;
+  // area labels
+  g += `<text x="${px(139.7570)}" y="${py(35.6938)}" font-size="15" font-weight="800" fill="#38271A" opacity=".55">神保町</text>`;
+  g += `<text x="${px(139.7648)}" y="${py(35.7020)}" font-size="15" font-weight="800" fill="#38271A" opacity=".55">御茶ノ水</text>`;
+  // stations
+  for (const st of STATIONS) {
+    const x = px(st.lng), y = py(st.lat), lx = x + (st.dx || 0);
+    g += `<rect x="${lx - 62}" y="${y + 12}" width="124" height="34" fill="#E0D3AF"/><text x="${lx}" y="${y + 28}" text-anchor="middle" font-size="13.5" font-weight="800" fill="#38271A">${st.name}</text><text x="${lx}" y="${y + 41}" text-anchor="middle" font-size="10.5" font-weight="700" fill="#7A6A55">STATION</text><circle cx="${x}" cy="${y}" r="6" fill="#38271A"/>`;
+  }
+  // pins
+  SHOPS.forEach((s, i) => {
+    const n = i + 1, x = px(s.lng), y = py(s.lat), v = s.status === "visited";
+    const fill = v ? "#5C7231" : "#FFFBF2", stroke = v ? "#5C7231" : "#A9711F", tcol = v ? "#fff" : "#A9711F";
+    const lw = Math.max(74, s.name.length * 14 + 18);
+    g += `<a class="pin" href="#${s.id}" data-n="${n}" data-id="${s.id}"><g transform="translate(${x.toFixed(1)} ${y.toFixed(1)})">`
+      + `<polygon points="-6,-2 6,-2 0,6" fill="${stroke}"/>`
+      + `<rect x="-17" y="-40" width="34" height="38" rx="3" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`
+      + `<text y="-15" text-anchor="middle" font-size="16" font-weight="900" fill="${tcol}">${n}</text>`
+      + `<g class="lbl"><rect x="${-lw / 2}" y="-70" width="${lw}" height="26" fill="#38271A"/><text y="-52" text-anchor="middle" font-size="13" font-weight="800" fill="#FFFBF2">${esc(s.name)}</text></g>`
+      + `</g></a>`;
+  });
+  return g;
+}
+
+function cardHTML(s, n) {
+  const v = s.status === "visited";
+  const typeChip = `<span class="genre${s.type === "udon" ? " u" : ""}">${s.type === "udon" ? "うどん" : "そば"}</span>`;
+  const styleChip = s.style ? `<span class="style">${s.style === "standing" ? "立ち食い" : "着席"}</span>` : "";
+  const statusChip = `<span class="status">${v ? "訪問済み" : "行きたい"}</span>`;
+  const photo = s.photo ? `<img class="ph" src="${esc(s.photo)}" alt="${esc(s.name)}">` : "";
+  const strip = v
+    ? `<div class="strip"><span>来訪 ${esc(s.visit_date || "—")}</span><span>食べた一杯 ${esc(s.dish || "—")}</span><span class="star">${stars(s.rating)}</span></div>`
+    : `<div class="strip"><span>エリア ${esc(s.area)}</span>${s.style ? `<span>${s.style === "standing" ? "立ち食い" : "着席"}</span>` : ""}<span>未訪問</span></div>`;
+  const q = encodeURIComponent(s.name + " " + (s.address || s.area || ""));
+  return `<article class="card${v ? "" : " w"}" id="${s.id}" data-type="${s.type}" data-style="${s.style || ""}" data-status="${s.status}">`
+    + `<div class="hd"><div class="big">${String(n).padStart(2, "0")}</div><div><div class="tags">${typeChip}${styleChip}${statusChip}</div><h3>${esc(s.name)}</h3></div></div>`
+    + photo
+    + `<p class="tx">${esc(s.memo || "")}</p>`
+    + (s.address ? `<p class="addr">${esc(s.address)}</p>` : "")
+    + strip
+    + `<div class="bt"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener">Google Maps <i>→</i></a></div>`
+    + `</article>`;
+}
+
+function render() {
+  document.getElementById("map").innerHTML = mapSVG();
+  const v = SHOPS.filter(s => s.status === "visited"), w = SHOPS.filter(s => s.status !== "visited");
+  document.getElementById("cnt-v").textContent = v.length + " 軒";
+  document.getElementById("cnt-w").textContent = w.length + " 軒";
+  document.getElementById("cnt-t").textContent = SHOPS.length;
+  let h = "";
+  const sec = (title, cls, note, list) => {
+    if (!list.length) return "";
+    return `<div class="bar ${cls}" data-sec="${cls}"><h2>${title}</h2><span>${list.length} 軒</span></div><p class="gp">${note}</p>`
+      + list.map(s => cardHTML(s, SHOPS.indexOf(s) + 1)).join("")
+      + `<p class="empty" data-empty="${cls}" hidden>この条件の店はありません</p>`;
+  };
+  h += sec("訪問済み", "v", "行った店の記録。タップで地図のピンと行き来できる。", v);
+  h += sec("行きたい", "w", "まだ行っていない店。行ったら data.json で visited に変える。", w);
+  document.getElementById("sections").innerHTML = h || `<p class="loadmsg">店がまだ登録されていません。</p>`;
+  wirePins();
+  applyFilter();
+}
+
+function wirePins() {
+  const coarse = window.matchMedia("(pointer: coarse)").matches;
+  document.querySelectorAll(".pin").forEach(a => {
+    a.addEventListener("click", ev => {
+      ev.preventDefault();
+      if (coarse && onPin !== a) {
+        if (onPin) onPin.classList.remove("on");
+        onPin = a; a.classList.add("on"); return;
+      }
+      const c = document.getElementById(a.dataset.id);
+      if (!c) return;
+      c.scrollIntoView({behavior: "smooth", block: "start"});
+      c.classList.add("hit");
+      setTimeout(() => c.classList.remove("hit"), 1600);
+      if (onPin) { onPin.classList.remove("on"); onPin = null; }
+    });
+  });
+  document.getElementById("map").addEventListener("click", ev => {
+    if (!ev.target.closest(".pin") && onPin) { onPin.classList.remove("on"); onPin = null; }
+  });
+}
+
+function applyFilter() {
+  let shown = 0;
+  const match = s => (fType.size === 0 || fType.has(s.type)) && (fStyle.size === 0 || (s.style && fStyle.has(s.style)));
+  SHOPS.forEach(s => {
+    const ok = match(s);
+    const card = document.getElementById(s.id);
+    if (card) card.classList.toggle("off", !ok);
+    const pin = document.querySelector(`.pin[data-id="${s.id}"]`);
+    if (pin) pin.classList.toggle("off", !ok);
+    if (ok) shown++;
+  });
+  for (const cls of ["v", "w"]) {
+    const cards = document.querySelectorAll(`.card[data-status="${cls === "v" ? "visited" : "wishlist"}"]:not(.off)`);
+    const bar = document.querySelector(`.bar[data-sec="${cls}"]`);
+    const emp = document.querySelector(`[data-empty="${cls}"]`);
+    if (bar) bar.style.display = cards.length ? "" : "none";
+    if (emp) emp.hidden = cards.length > 0;
+    const gp = bar ? bar.nextElementSibling : null;
+    if (gp && gp.classList.contains("gp")) gp.style.display = cards.length ? "" : "none";
+  }
+  const active = fType.size + fStyle.size > 0;
+  document.querySelector('[data-clear]').setAttribute("aria-pressed", active ? "false" : "true");
+  document.getElementById("chipnote").textContent = active ? `${shown} 軒を表示中（全 ${SHOPS.length} 軒）` : "";
+}
+
+document.getElementById("chips").addEventListener("click", e => {
+  const b = e.target.closest(".chip");
+  if (!b) return;
+  if (b.dataset.clear) {
+    fType.clear(); fStyle.clear();
+    document.querySelectorAll(".chip[data-type],.chip[data-style]").forEach(c => c.setAttribute("aria-pressed", "false"));
+  } else if (b.dataset.type) {
+    const on = b.getAttribute("aria-pressed") === "true";
+    b.setAttribute("aria-pressed", on ? "false" : "true");
+    on ? fType.delete(b.dataset.type) : fType.add(b.dataset.type);
+  } else if (b.dataset.style) {
+    const on = b.getAttribute("aria-pressed") === "true";
+    b.setAttribute("aria-pressed", on ? "false" : "true");
+    on ? fStyle.delete(b.dataset.style) : fStyle.add(b.dataset.style);
+  }
+  applyFilter();
+});
+
+fetch("data.json").then(r => r.json()).then(d => {
+  SHOPS = d.shops || [];
+  render();
+}).catch(() => {
+  document.getElementById("sections").innerHTML = `<p class="loadmsg">data.json を読み込めませんでした。ローカルで見る場合は http サーバ経由で開いてください（README参照）。</p>`;
+});
+</script>
+</body>
+</html>
