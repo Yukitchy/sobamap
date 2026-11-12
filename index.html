@@ -23,7 +23,7 @@ h1,h2,h3,.big,.tn,.no{font-family:Archivo,"Noto Sans JP",sans-serif;font-stretch
 .top{display:flex;align-items:center;justify-content:space-between;font-weight:800;font-size:13px;letter-spacing:.14em;padding:18px 0 8px;border-bottom:4px solid var(--ink)}
 h1{margin:14px 0 4px;font-size:clamp(46px,13vw,74px);line-height:.92}
 h1 em{font-style:normal;color:var(--ac);border-bottom:.06em solid var(--ac);padding-bottom:.02em}
-.lead{margin:0 0 14px;font-size:14px;font-weight:700;color:var(--mu)}
+.lead{margin:14px 0 14px;font-size:14px;font-weight:700;color:var(--mu)}
 .hb{background:var(--ink);color:#FFFBF2;display:flex;justify-content:space-between;gap:10px;padding:13px 16px;font-weight:800;font-size:14px;letter-spacing:.05em;text-transform:uppercase}
 .hb b{color:var(--ac2)}
 /* filter chips */
@@ -90,7 +90,6 @@ h2.map{margin:0;font-size:32px}
 <body>
 <div class="col">
   <div class="top"><span class="lg"><img src="img/logo-badge.png" alt="" width="28" height="28">Sobamap</span><span>そば・うどん記録</span></div>
-  <h1>Soba<em>map</em></h1>
   <p class="lead">行った店のレポと、まだ行っていない店のリストを、一枚の地図で。</p>
   <div class="hb"><span>訪問済み <b id="cnt-v">–</b></span><span>行きたい <b id="cnt-w">–</b></span><span>全 <b id="cnt-t">–</b> 軒</span></div>
 
@@ -103,7 +102,6 @@ h2.map{margin:0;font-size:32px}
   </div>
   <p class="chipnote" id="chipnote"></p>
 
-  <div class="maphd"><h2 class="map">The map</h2></div>
   <svg id="map" viewBox="0 0 600 540" role="img" aria-label="神保町・神田・御茶ノ水エリアのそば・うどん店スケッチマップ"></svg>
   <div class="lg"><span><i class="v"></i>訪問済み</span><span><i class="w"></i>行きたい</span><span>ピンの番号は下のリストと共通</span></div>
 
