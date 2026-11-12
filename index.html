@@ -27,8 +27,8 @@ h1 em{font-style:normal;color:var(--ac);border-bottom:.06em solid var(--ac);padd
 .hb{background:var(--ink);color:#FFFBF2;display:flex;justify-content:space-between;gap:10px;padding:13px 16px;font-weight:800;font-size:14px;letter-spacing:.05em;text-transform:uppercase}
 .hb b{color:var(--ac2)}
 /* filter chips */
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
-.chip{font:800 13px/1 Archivo,"Noto Sans JP",sans-serif;letter-spacing:.06em;padding:11px 14px;border:2px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
+.chips{display:flex;flex-direction:column;gap:8px;margin:18px 0 0}
+.chip{display:block;width:100%;text-align:left;font:800 13px/1 Archivo,"Noto Sans JP",sans-serif;letter-spacing:.06em;padding:11px 14px;border:2px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--ink);color:#FFFBF2}
 .chip .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:1px}
 .chipnote{margin:8px 0 0;font-size:13px;color:var(--mu);font-weight:700}
