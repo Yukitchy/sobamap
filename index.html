@@ -71,10 +71,11 @@ h2.map{margin:0;font-size:32px}
 .strip span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 .strip span+span:before{content:"";display:inline-block;width:4px;height:4px;background:var(--ac2);margin:0 8px;flex:none}
 .strip .star{color:var(--ac2);letter-spacing:.08em}
-.bt{display:flex;gap:6px;margin-top:10px}
-.bt>*{flex:1 1 0;min-width:0}
-.btn{display:flex;align-items:center;justify-content:center;gap:6px;min-height:46px;padding:0 8px;background:var(--ink);color:#fff;text-decoration:none;font:800 13px Archivo,"Noto Sans JP",sans-serif;letter-spacing:.04em;border:0;cursor:pointer;white-space:nowrap}
-.btn i{font-style:normal;color:var(--ac2)}
+.phw{position:relative;min-height:54px;margin-bottom:12px}
+.phw .ph{margin-bottom:0}
+.hdic{position:absolute;top:8px;right:8px;display:flex;gap:8px}
+.hdic a{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.28)}
+.hdic img{width:26px;height:26px;display:block}
 .empty{padding:18px 0;font-weight:700;color:var(--mu)}
 /* about + credits */
 .know{background:var(--ink);color:#FFFBF2;margin-top:38px;padding:30px 0 34px}
@@ -176,18 +177,18 @@ function cardHTML(s, n) {
   const typeChip = `<span class="genre${s.type === "udon" ? " u" : ""}">${s.type === "udon" ? "うどん" : "そば"}</span>`;
   const styleChip = s.style ? `<span class="style">${s.style === "standing" ? "立ち食い" : "着席"}</span>` : "";
   const statusChip = `<span class="status">${v ? "訪問済み" : "行きたい"}</span>`;
-  const photo = s.photo ? `<img class="ph" src="${esc(s.photo)}" alt="${esc(s.name)}">` : "";
   const strip = v
     ? `<div class="strip"><span>来訪 ${esc(s.visit_date || "—")}</span><span class="star">${stars(s.rating)}</span></div>`
     : `<div class="strip"><span>エリア ${esc(s.area)}</span>${s.style ? `<span>${s.style === "standing" ? "立ち食い" : "着席"}</span>` : ""}<span>未訪問</span></div>`;
   const q = encodeURIComponent(s.name + " " + (s.address || s.area || ""));
   return `<article class="card${v ? "" : " w"}" id="${s.id}" data-type="${s.type}" data-style="${s.style || ""}" data-status="${s.status}">`
     + `<div class="hd"><div class="big">${String(n).padStart(2, "0")}</div><div><div class="tags">${typeChip}${styleChip}${statusChip}</div><h3>${esc(s.name)}</h3></div></div>`
-    + photo
+    + `<div class="phw">${s.photo ? `<img class="ph" src="${esc(s.photo)}" alt="${esc(s.name)}">` : ""}`
+    + `<div class="hdic">${s.tabelog_menu ? `<a href="${esc(s.tabelog_menu)}" target="_blank" rel="noopener" aria-label="メニュー"><img src="img/menu-icon.png" alt=""></a>` : ""}`
+    + `<a href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener" aria-label="Google Maps"><img src="img/gmaps-pin.svg" alt=""></a></div></div>`
     + `<p class="tx">${esc(s.memo || "")}</p>`
     + (s.address ? `<p class="addr">${esc(s.address)}</p>` : "")
     + strip
-    + `<div class="bt"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener">Google Maps <i>→</i></a></div>`
     + `</article>`;
 }
 

@@ -14,7 +14,8 @@
    "status": "visited",
    "style": "standing",
    "type": "udon",
-   "visit_date": "2026-10-31"
+   "visit_date": "2026-10-31",
+   "tabelog_menu": "https://tabelog.com/tokyo/A1310/A131002/13252677/dtlmenu/photo/"
   },
   {
    "address": "東京都千代田区神田小川町3-16-1 ニュー駿河台ビル1F",
@@ -30,7 +31,8 @@
    "status": "wishlist",
    "style": "seated",
    "type": "udon",
-   "visit_date": ""
+   "visit_date": "",
+   "tabelog_menu": "https://tabelog.com/tokyo/A1310/A131003/13000629/dtlmenu/"
   },
   {
    "address": "東京都千代田区神田神保町1-13-7 SLビルB1",
@@ -47,7 +49,8 @@
    "status": "visited",
    "style": "seated",
    "type": "soba",
-   "visit_date": "2026-11-11"
+   "visit_date": "2026-11-11",
+   "tabelog_menu": "https://tabelog.com/tokyo/A1310/A131003/13149703/dtlmenu/"
   },
   {
    "address": "東京都千代田区神田神保町1-18-1 千石屋ビル1F",
@@ -63,7 +66,8 @@
    "status": "wishlist",
    "style": "seated",
    "type": "soba",
-   "visit_date": ""
+   "visit_date": "",
+   "tabelog_menu": "https://tabelog.com/tokyo/A1310/A131003/13030009/dtlmenu/"
   },
   {
    "address": "東京都千代田区神田猿楽町2-1-7",
@@ -79,7 +83,8 @@
    "status": "wishlist",
    "style": "seated",
    "type": "soba",
-   "visit_date": ""
+   "visit_date": "",
+   "tabelog_menu": "https://tabelog.com/tokyo/A1310/A131003/13000604/dtlmenu/photo/"
   },
   {
    "id": "nakamura-menbei-ikebukuro",
@@ -95,7 +100,8 @@
    "dish": "厚みかつ丼とそば（冷）",
    "rating": null,
    "photo": "img/nakamura-menbei-ikebukuro.jpg",
-   "memo": "お盆の札に店名が写っていた。ピリ辛温玉つけ汁が名物。"
+   "memo": "お盆の札に店名が写っていた。ピリ辛温玉つけ汁が名物。",
+   "tabelog_menu": "https://tabelog.com/tokyo/A1305/A130501/13282463/dtlmenu/photo/"
   },
   {
    "id": "nakashoya-kawagoe",
@@ -111,7 +117,8 @@
    "dish": "せいろそば＋とろろセット",
    "rating": null,
    "photo": "img/nakashoya-kawagoe.jpg",
-   "memo": "写真のGPSが店舗住所と一致。石原町で唯一のそば店。"
+   "memo": "写真のGPSが店舗住所と一致。石原町で唯一のそば店。",
+   "tabelog_menu": "https://tabelog.com/saitama/A1103/A110303/11038370/dtlmenu/"
   },
   {
    "id": "makino-udon-hakata",
@@ -127,7 +134,8 @@
    "dish": "ごぼう天うどん",
    "rating": null,
    "photo": "img/makino-udon-hakata.jpg",
-   "memo": "名物の「注ぎ足し出汁の小やかん」が写真に写っていた。"
+   "memo": "名物の「注ぎ足し出汁の小やかん」が写真に写っていた。",
+   "tabelog_menu": "https://tabelog.com/fukuoka/A4001/A400101/40042204/dtlmenu/"
   },
   {
    "id": "irodori-shinosaka",
@@ -143,7 +151,8 @@
    "dish": "温玉カレーうどん",
    "rating": null,
    "photo": "img/irodori-shinosaka.jpg",
-   "memo": "トレーマットに店名が印刷されていた。カレー釜玉が看板メニュー。"
+   "memo": "トレーマットに店名が印刷されていた。カレー釜玉が看板メニュー。",
+   "tabelog_menu": "https://tabelog.com/osaka/A2701/A270301/27145761/dtlmenu/"
   },
   {
    "id": "baso-omotesando",
@@ -159,7 +168,8 @@
    "dish": "つけSOBA（極太そば・鴨と角煮）",
    "rating": null,
    "photo": "img/baso-omotesando.jpg",
-   "memo": "写真のGPSが店舗住所から約10m。黒い石の皿に巻いて盛る極太そばが特徴。ゲスト家族と訪問。"
+   "memo": "写真のGPSが店舗住所から約10m。黒い石の皿に巻いて盛る極太そばが特徴。ゲスト家族と訪問。",
+   "tabelog_menu": "https://tabelog.com/tokyo/A1306/A130601/13285237/dtlmenu/"
   },
   {
    "address": "東京都中央区日本橋本町1-1-7",
@@ -175,7 +185,8 @@
    "status": "visited",
    "style": "standing",
    "type": "soba",
-   "visit_date": "2026-11-12"
+   "visit_date": "2026-11-12",
+   "tabelog_menu": "https://tabelog.com/tokyo/A1302/A130202/13006306/dtlmenu/"
   }
  ]
 }
