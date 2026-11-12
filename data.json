@@ -9,7 +9,7 @@
    "lng": 139.765182,
    "memo": "食券の写真に店名と日時が明記されていた（2026-10-31 19:19）。立ち食いうどんの人気店。",
    "name": "おにやんま 御茶ノ水店",
-   "photo": "",
+   "photo": "img/oniyanma-ochanomizu.jpg",
    "rating": null,
    "status": "visited",
    "style": "standing",
@@ -41,7 +41,7 @@
    "lng": 139.758652,
    "memo": "2026-11-11に訪問。店主の手打ち十割そばと、和風キーマカレーのセットが名物。神保町駅から徒歩2分、すずらん通り沿いの地下1階。",
    "name": "まれびと",
-   "photo": "",
+   "photo": "img/marebito.jpg",
    "rating": null,
    "status": "visited",
    "style": "seated",
@@ -93,7 +93,7 @@
    "visit_date": "2024-11-08",
    "dish": "厚みかつ丼とそば（冷）",
    "rating": null,
-   "photo": "",
+   "photo": "img/nakamura-menbei-ikebukuro.jpg",
    "memo": "お盆の札に店名が写っていた。ピリ辛温玉つけ汁が名物。"
   },
   {
@@ -109,7 +109,7 @@
    "visit_date": "2025-03-28",
    "dish": "せいろそば＋とろろセット",
    "rating": null,
-   "photo": "",
+   "photo": "img/nakashoya-kawagoe.jpg",
    "memo": "写真のGPSが店舗住所と一致。石原町で唯一のそば店。"
   },
   {
@@ -125,7 +125,7 @@
    "visit_date": "2026-02-24",
    "dish": "ごぼう天うどん",
    "rating": null,
-   "photo": "",
+   "photo": "img/makino-udon-hakata.jpg",
    "memo": "名物の「注ぎ足し出汁の小やかん」が写真に写っていた。"
   },
   {
@@ -141,7 +141,7 @@
    "visit_date": "2025-06-26",
    "dish": "温玉カレーうどん",
    "rating": null,
-   "photo": "",
+   "photo": "img/irodori-shinosaka.jpg",
    "memo": "トレーマットに店名が印刷されていた。カレー釜玉が看板メニュー。"
   },
   {
@@ -157,7 +157,7 @@
    "visit_date": "2025-07-09",
    "dish": "つけSOBA（極太そば・鴨と角煮）",
    "rating": null,
-   "photo": "",
+   "photo": "img/baso-omotesando.jpg",
    "memo": "写真のGPSが店舗住所から約10m。黒い石の皿に巻いて盛る極太そばが特徴。ゲスト家族と訪問。"
   },
   {
@@ -169,7 +169,7 @@
    "lng": 139.776596,
    "memo": "2026-11-12に訪問。鰹節問屋・中弥商店の直営立ち食いそば。美味しかった。この日の注文は鶏そぼろそば＋半ライス（粉かつお付）で合計750円。メニュー価格：もり450円・かけ450円・半ライス（粉かつお付）150円・並ライス（粉かつお付）300円。",
    "name": "そばよし 日本橋本店",
-   "photo": "",
+   "photo": "img/soba-yoshi-nihonbashi.jpg",
    "rating": null,
    "status": "visited",
    "style": "standing",
