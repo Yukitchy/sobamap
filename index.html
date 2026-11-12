@@ -155,11 +155,17 @@ function mapSVG() {
     const n = i + 1, x = px(s.lng), y = py(s.lat), v = s.status === "visited";
     const fill = v ? "#5C7231" : "#FFFBF2", stroke = v ? "#5C7231" : "#A9711F", tcol = v ? "#fff" : "#A9711F";
     const lw = Math.max(74, s.name.length * 14 + 18);
+    const lblG = `<g class="lbl"><rect x="${-lw / 2}" y="-76" width="${lw}" height="26" fill="#38271A"/><text y="-58" text-anchor="middle" font-size="13" font-weight="800" fill="#FFFBF2">${esc(s.name)}</text></g>`;
+    const body = s.photo
+      ? `<clipPath id="cp${n}"><circle cx="0" cy="-30" r="21"/></clipPath><polygon points="-7,-12 7,-12 0,3" fill="${stroke}"/>`
+        + `<circle cx="0" cy="-30" r="23" fill="#FFFBF2" stroke="${stroke}" stroke-width="3"/>`
+        + `<image href="${esc(s.photo)}" x="-21" y="-51" width="42" height="42" preserveAspectRatio="xMidYMid slice" clip-path="url(#cp${n})"/>`
+        + `<circle cx="-16" cy="-45" r="10" fill="${stroke}" stroke="#FFFBF2" stroke-width="2"/><text x="-16" y="-40" text-anchor="middle" font-size="12" font-weight="900" fill="${tcol}">${n}</text>`
+      : `<polygon points="-6,-2 6,-2 0,6" fill="${stroke}"/>`
+        + `<rect x="-17" y="-40" width="34" height="38" rx="3" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`
+        + `<text y="-15" text-anchor="middle" font-size="16" font-weight="900" fill="${tcol}">${n}</text>`;
     g += `<a class="pin" href="#${s.id}" data-n="${n}" data-id="${s.id}"><g transform="translate(${x.toFixed(1)} ${y.toFixed(1)})">`
-      + `<polygon points="-6,-2 6,-2 0,6" fill="${stroke}"/>`
-      + `<rect x="-17" y="-40" width="34" height="38" rx="3" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`
-      + `<text y="-15" text-anchor="middle" font-size="16" font-weight="900" fill="${tcol}">${n}</text>`
-      + `<g class="lbl"><rect x="${-lw / 2}" y="-70" width="${lw}" height="26" fill="#38271A"/><text y="-52" text-anchor="middle" font-size="13" font-weight="800" fill="#FFFBF2">${esc(s.name)}</text></g>`
+      + body + lblG
       + `</g></a>`;
   });
   return g;
@@ -172,7 +178,7 @@ function cardHTML(s, n) {
   const statusChip = `<span class="status">${v ? "訪問済み" : "行きたい"}</span>`;
   const photo = s.photo ? `<img class="ph" src="${esc(s.photo)}" alt="${esc(s.name)}">` : "";
   const strip = v
-    ? `<div class="strip"><span>来訪 ${esc(s.visit_date || "—")}</span><span>食べた一杯 ${esc(s.dish || "—")}</span><span class="star">${stars(s.rating)}</span></div>`
+    ? `<div class="strip"><span>来訪 ${esc(s.visit_date || "—")}</span><span class="star">${stars(s.rating)}</span></div>`
     : `<div class="strip"><span>エリア ${esc(s.area)}</span>${s.style ? `<span>${s.style === "standing" ? "立ち食い" : "着席"}</span>` : ""}<span>未訪問</span></div>`;
   const q = encodeURIComponent(s.name + " " + (s.address || s.area || ""));
   return `<article class="card${v ? "" : " w"}" id="${s.id}" data-type="${s.type}" data-style="${s.style || ""}" data-status="${s.status}">`
