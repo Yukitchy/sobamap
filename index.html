@@ -7,7 +7,12 @@
 <meta name="description" content="行ったそば・うどんの店の記録と、行きたい店のリストを地図で見るための個人マップ。">
 <meta property="og:title" content="Sobamap">
 <meta property="og:description" content="そば・うどんの「行った店」と「行きたい店」を一枚の地図に。">
-<meta name="twitter:card" content="summary">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://yukitchy.github.io/sobamap/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yukitchy.github.io/sobamap/img/og.png">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png">
 <link rel="icon" type="image/png" sizes="48x48" href="icons/favicon-48.png">
@@ -19,7 +24,7 @@
 body{margin:0;background:var(--bg);color:var(--ink);color-scheme:light;font:16px/1.5 Archivo,"Noto Sans JP",sans-serif}
 .col{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 h1,h2,h3,.big,.tn,.no{font-family:Archivo,"Noto Sans JP",sans-serif;font-stretch:62%;font-weight:900;letter-spacing:-.01em;text-transform:uppercase}
-.lg{display:inline-flex;align-items:center;gap:8px}.lg img{display:block;border-radius:50%}
+.lg{display:inline-flex;align-items:center;gap:8px}.lg img{display:block}.lg img.wm{mix-blend-mode:multiply;height:25px;width:auto}
 .top{display:flex;align-items:center;justify-content:space-between;font-weight:800;font-size:13px;letter-spacing:.14em;padding:18px 0 8px;border-bottom:4px solid var(--ink)}
 h1{margin:14px 0 4px;font-size:clamp(46px,13vw,74px);line-height:.92}
 h1 em{font-style:normal;color:var(--ac);border-bottom:.06em solid var(--ac);padding-bottom:.02em}
@@ -90,7 +95,7 @@ h2.map{margin:0;font-size:32px}
 </head>
 <body>
 <div class="col">
-  <div class="top"><span class="lg"><img src="img/logo-badge.png" alt="" width="28" height="28">Sobamap</span><span>そば・うどん記録</span></div>
+  <div class="top"><span class="lg"><img class="wm" src="img/logo-wordmark.png" alt="Sobamap" width="150" height="25"></span><span>そば・うどん記録</span></div>
   <p class="lead">行った店のレポと、まだ行っていない店のリストを、一枚の地図で。</p>
   <div class="hb"><span>訪問済み <b id="cnt-v">–</b></span><span>行きたい <b id="cnt-w">–</b></span><span>全 <b id="cnt-t">–</b> 軒</span></div>
 
