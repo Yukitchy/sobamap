@@ -29,14 +29,32 @@ h1,h2,h3,.big,.tn,.no{font-family:Archivo,"Noto Sans JP",sans-serif;font-stretch
 h1{margin:14px 0 4px;font-size:clamp(46px,13vw,74px);line-height:.92}
 h1 em{font-style:normal;color:var(--ac);border-bottom:.06em solid var(--ac);padding-bottom:.02em}
 .lead{margin:14px 0 14px;font-size:14px;font-weight:700;color:var(--mu)}
-.hb{background:var(--ink);color:#FFFBF2;display:flex;justify-content:space-between;gap:10px;padding:13px 16px;font-weight:800;font-size:14px;letter-spacing:.05em;text-transform:uppercase}
-.hb b{color:var(--ac2)}
-/* filter chips */
-.chips{display:flex;flex-direction:column;gap:8px;margin:18px 0 0}
-.chip{display:block;width:100%;text-align:left;font:800 13px/1 Archivo,"Noto Sans JP",sans-serif;letter-spacing:.06em;padding:11px 14px;border:2px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
-.chip[aria-pressed="true"]{background:var(--ink);color:#FFFBF2}
-.chip .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:1px}
-.chipnote{margin:8px 0 0;font-size:13px;color:var(--mu);font-weight:700}
+.hb{background:var(--ink);color:#FFFBF2;display:flex;justify-content:space-between;gap:10px;padding:14px 16px;font-weight:800;font-size:15px;letter-spacing:.05em;text-transform:uppercase}
+.hb b{color:#A9C46E}
+/* hero collage (eatmap .mos) */
+.flush{padding-left:0;padding-right:0}
+.hero{position:relative;overflow:hidden;background:#2A2019}
+.mos{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;gap:3px;height:340px}
+.mos a{display:block;min-height:0;overflow:hidden;position:relative}
+.mos img{display:block;width:100%;height:100%;object-fit:cover}
+.mos>:first-child{grid-row:1/3}
+.vt{position:absolute;left:14px;top:0;z-index:2;background:var(--ac);color:#fff;font:900 30px/1.05 "Noto Sans JP",sans-serif;writing-mode:vertical-rl;padding:12px 9px;letter-spacing:.06em}
+.hcap{position:absolute;left:0;right:0;bottom:0;z-index:2;display:block;padding:36px 14px 12px;background:linear-gradient(180deg,rgba(24,16,10,0),rgba(24,16,10,.8));color:#fff}
+.hcap .hs{display:inline-block;background:var(--ac);color:#fff;font:900 12px/1 Archivo,"Noto Sans JP",sans-serif;letter-spacing:.08em;padding:5px 8px;margin:0 0 7px}
+.hcap .hd2{display:block;font:900 clamp(19px,5.4vw,25px)/1.25 "Noto Sans JP",sans-serif;letter-spacing:.01em}
+/* filter tiles (eatmap I FEEL LIKE) */
+.mood{padding-top:22px}
+.mood .mt{margin:0 0 10px;font:800 13px/1 Archivo,"Noto Sans JP",sans-serif;letter-spacing:.14em;text-transform:uppercase}
+.mood .chips{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.chip{display:grid;justify-items:center;align-content:center;gap:3px;min-height:80px;padding:9px 1px 7px;border:3px solid var(--ink);background:transparent;color:var(--ink);font:800 10px/1.1 Archivo,"Noto Sans JP",sans-serif;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:transform .12s}
+.chip:active{transform:scale(.96)}
+.chip svg{width:30px;height:30px;display:block}
+.chip .lb{white-space:nowrap}
+.chip small{font:700 11px/1 Archivo,sans-serif;color:var(--mu);letter-spacing:.04em}
+.chip[aria-pressed="true"]{background:var(--ac);border-color:var(--ac);color:#FFFBF2}
+.chip[aria-pressed="true"] small{color:#FFFBF2}
+.chipnote{margin:10px 0 0;font-size:14px;color:var(--mu);font-weight:700}
+@media(max-width:380px){.chip{font-size:9px;letter-spacing:.03em}.mos{height:300px}.vt{font-size:25px}}
 /* map */
 .maphd{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:26px 0 10px}
 h2.map{margin:0;font-size:32px}
@@ -97,16 +115,33 @@ h2.map{margin:0;font-size:32px}
 <div class="col">
   <div class="top"><span class="lg"><img class="wm" src="img/logo-wordmark.png" alt="Sobamap" width="150" height="25"></span><span>そば・うどん記録</span></div>
   <p class="lead">行った店のレポと、まだ行っていない店のリストを、一枚の地図で。</p>
-  <div class="hb"><span>訪問済み <b id="cnt-v">–</b></span><span>行きたい <b id="cnt-w">–</b></span><span>全 <b id="cnt-t">–</b> 軒</span></div>
+</div>
 
-  <div class="chips" id="chips" role="group" aria-label="絞り込み">
-    <button class="chip" data-clear="1" aria-pressed="true">すべて</button>
-    <button class="chip" data-type="soba" aria-pressed="false"><span class="dot" style="background:var(--ac)"></span>そば</button>
-    <button class="chip" data-type="udon" aria-pressed="false"><span class="dot" style="background:#6B4226"></span>うどん</button>
-    <button class="chip" data-style="standing" aria-pressed="false">立ち食い</button>
-    <button class="chip" data-style="seated" aria-pressed="false">着席</button>
+<div class="col flush">
+  <div class="hero mos">
+    <a href="#oniyanma-ochanomizu" aria-label="おにやんま 御茶ノ水店へ">
+      <img src="img/oniyanma-ochanomizu.jpg" alt="特上天ぷらうどん">
+      <span class="vt">御茶ノ水</span>
+      <span class="hcap"><span class="hs">おにやんま 御茶ノ水店</span><span class="hd2">特上天ぷらうどん（温・大）</span></span>
+    </a>
+    <a href="#marebito" aria-label="まれびとへ"><img src="img/marebito.jpg" alt="十割そば＆とり天のセット"></a>
+    <a href="#baso-omotesando" aria-label="BASO 表参道へ"><img src="img/baso-omotesando.jpg" alt="つけSOBA"></a>
   </div>
-  <p class="chipnote" id="chipnote"></p>
+  <div class="hb"><span>訪問済み <b id="cnt-v">–</b></span><span>行きたい <b id="cnt-w">–</b></span><span>全 <b id="cnt-t">–</b> 軒</span></div>
+</div>
+
+<div class="col">
+  <div class="mood">
+    <p class="mt">I feel like</p>
+    <div class="chips" id="chips" role="group" aria-label="絞り込み">
+      <button type="button" class="chip" data-clear="1" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg><span class="lb">All</span><small data-cnt="all">–</small></button>
+      <button type="button" class="chip" data-type="soba" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14.5h18"/><path d="M5 14.5a7 7 0 0 0 14 0"/><path d="M9.5 21h5"/><path d="M13.8 2.8l4.6 8.2"/><path d="M17.2 2.2l3.6 6.8"/><path d="M16.6 8.6c-1 1.4 1 2.1 0 3.9"/></svg><span class="lb">Soba</span><small data-cnt="soba">–</small></button>
+      <button type="button" class="chip" data-type="udon" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14.5h18"/><path d="M5 14.5a7 7 0 0 0 14 0"/><path d="M9.5 21h5"/><path d="M9 3.5c-1 1.6 1 2.4 0 4"/><path d="M14.5 3.5c-1 1.6 1 2.4 0 4"/></svg><span class="lb">Udon</span><small data-cnt="udon">–</small></button>
+      <button type="button" class="chip" data-style="standing" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="4.3" r="1.9"/><path d="M7.5 6.4v5.4"/><path d="M7.5 8.6l5.2-1.1"/><path d="M7.5 11.8l-2.4 8.2"/><path d="M7.5 11.8l2.4 8.2"/><path d="M15.8 7.5h5.2"/><path d="M18.6 7.5V20"/></svg><span class="lb">Standing</span><small data-cnt="standing">–</small></button>
+      <button type="button" class="chip" data-style="seated" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3v18"/><path d="M6.5 12h10"/><path d="M16.5 12v9"/><path d="M6.5 16.5h10"/></svg><span class="lb">Seated</span><small data-cnt="seated">–</small></button>
+    </div>
+    <p class="chipnote" id="chipnote"></p>
+  </div>
 
   <svg id="map" viewBox="0 0 600 540" role="img" aria-label="神保町・神田・御茶ノ水エリアのそば・うどん店スケッチマップ"></svg>
   <div class="lg"><span><i class="v"></i>訪問済み</span><span><i class="w"></i>行きたい</span><span>ピンの番号は下のリストと共通</span></div>
@@ -203,6 +238,12 @@ function render() {
   document.getElementById("cnt-v").textContent = v.length + " 軒";
   document.getElementById("cnt-w").textContent = w.length + " 軒";
   document.getElementById("cnt-t").textContent = SHOPS.length;
+  const setCnt = (k, n) => { const el = document.querySelector(`[data-cnt="${k}"]`); if (el) el.textContent = n; };
+  setCnt("all", SHOPS.length);
+  setCnt("soba", SHOPS.filter(s => s.type === "soba").length);
+  setCnt("udon", SHOPS.filter(s => s.type === "udon").length);
+  setCnt("standing", SHOPS.filter(s => s.style === "standing").length);
+  setCnt("seated", SHOPS.filter(s => s.style === "seated").length);
   let h = "";
   const sec = (title, cls, note, list) => {
     if (!list.length) return "";
