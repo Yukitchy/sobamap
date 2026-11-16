@@ -42,6 +42,9 @@ h1 em{font-style:normal;color:var(--ac);border-bottom:.06em solid var(--ac);padd
 .hcap{position:absolute;left:0;right:0;bottom:0;z-index:2;display:block;padding:36px 14px 12px;background:linear-gradient(180deg,rgba(24,16,10,0),rgba(24,16,10,.8));color:#fff}
 .hcap .hs{display:inline-block;background:var(--ac);color:#fff;font:900 12px/1 Archivo,"Noto Sans JP",sans-serif;letter-spacing:.08em;padding:5px 8px;margin:0 0 7px}
 .hcap .hd2{display:block;font:900 clamp(19px,5.4vw,25px)/1.25 "Noto Sans JP",sans-serif;letter-spacing:.01em}
+.hcap.sm{padding:22px 6px 6px}
+.hcap.sm .hs{display:block;width:fit-content;max-width:100%;box-sizing:border-box;font-size:9px;padding:3px 5px;margin:0 0 3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hcap.sm .hd2{font-size:10px;line-height:1.3;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 /* filter tiles (eatmap I FEEL LIKE) */
 .mood{padding-top:22px}
 .mood .mt{margin:0 0 10px;font:800 13px/1 Archivo,"Noto Sans JP",sans-serif;letter-spacing:.14em;text-transform:uppercase}
@@ -119,7 +122,7 @@ h2.map{margin:0;font-size:32px}
 </div>
 
 <div class="col flush">
-  <div class="hero mos">
+  <div class="hero mos" id="hero">
     <a href="#oniyanma-ochanomizu" aria-label="おにやんま 御茶ノ水店へ">
       <img src="img/oniyanma-ochanomizu.jpg" alt="特上天ぷらうどん">
       <span class="vt">御茶ノ水</span>
@@ -324,8 +327,18 @@ document.getElementById("chips").addEventListener("click", e => {
   applyFilter();
 });
 
+function heroShuffle() {
+  const p = SHOPS.filter(s => s.status === "visited" && s.photo);
+  for (let i = p.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [p[i], p[j]] = [p[j], p[i]]; }
+  const h = document.getElementById("hero"), [a, b, c] = p;
+  if (!a) return;
+  const cap = (s, k) => `<span class="hcap${k ? " sm" : ""}"><span class="hs">${esc(s.name)}</span>${s.dish ? `<span class="hd2">${esc(s.dish)}</span>` : ""}</span>`;
+  const tile = (s, k) => `<a href="#${esc(s.id)}" aria-label="${esc(s.name)}へ"><img src="${esc(s.photo)}" alt="${esc(s.dish || s.name)}">${k ? "" : `<span class="vt">${esc(s.area)}</span>`}${cap(s, k)}</a>`;
+  h.innerHTML = tile(a, 0) + [b, c].filter(Boolean).map(s => tile(s, 1)).join("");
+}
 fetch("data.json").then(r => r.json()).then(d => {
   SHOPS = d.shops || [];
+  heroShuffle();
   render();
 }).catch(() => {
   document.getElementById("sections").innerHTML = `<p class="loadmsg">data.json を読み込めませんでした。ローカルで見る場合は http サーバ経由で開いてください（README参照）。</p>`;
