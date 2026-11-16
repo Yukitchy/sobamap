@@ -114,8 +114,44 @@ h2.map{margin:0;font-size:32px}
 .loadmsg{padding:26px 0;font-weight:700;color:var(--mu)}
 @media(min-width:700px){.col{max-width:760px}.crd{max-width:760px}}
 </style>
+<style>
+#ld{position:fixed;inset:0;z-index:99999;background:#F4EDDC;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity .4s ease}
+#ld.out{opacity:0;pointer-events:none}
+#ld svg{width:min(240px,64vw);height:auto;overflow:visible}
+#ld .lift{animation:ldlift 1.8s cubic-bezier(.45,0,.25,1) infinite}
+#ld .nd{animation:ldwave 1.8s ease-in-out infinite;transform-origin:50% 0}
+@keyframes ldlift{0%{transform:translateY(0)}38%{transform:translateY(-38px)}62%{transform:translateY(-38px)}100%{transform:translateY(0)}}
+@keyframes ldwave{0%,100%{transform:skewX(0)}45%{transform:skewX(-3deg)}70%{transform:skewX(2deg)}}
+#ld .lt{font:900 26px/1 Archivo,"Noto Sans JP",sans-serif;letter-spacing:.28em;margin-right:-.28em;color:#38271A}
+#ld .lt i{font-style:normal;color:#5C7231}
+#ld .sub{font:700 11px/1 Archivo,"Noto Sans JP",sans-serif;letter-spacing:.2em;margin-right:-.2em;color:#7A6A55}
+@media(prefers-reduced-motion:reduce){#ld .lift,#ld .nd{animation:none}}
+</style>
+<noscript><style>#ld{display:none}</style></noscript>
 </head>
 <body>
+<div id="ld" role="status" aria-label="読み込み中">
+<svg viewBox="0 0 200 150" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<g class="lift">
+<g class="nd" stroke="#D9B36A" stroke-width="4.5">
+<path d="M78 66c-8 14 8 22 0 36s8 22 0 34"/>
+<path d="M92 62c-8 14 8 22 0 36s8 22 0 38"/>
+<path d="M106 62c8 14-8 22 0 36s-8 22 0 38"/>
+<path d="M120 66c8 14-8 22 0 36s-8 22 0 34"/>
+</g>
+<g stroke="#38271A" stroke-width="5">
+<path d="M62 70L168 6"/>
+<path d="M72 80L178 16"/>
+</g>
+</g>
+<path d="M28 108h144c0 28-26 40-72 40s-72-12-72-40z" fill="#F4EDDC" stroke="#38271A" stroke-width="5"/>
+<path d="M28 108h144" stroke="#5C7231" stroke-width="5"/>
+<path d="M62 126c10 6 26 8 38 8" stroke="#D9B36A" stroke-width="3"/>
+</svg>
+<div class="lt">SOBA<i>MAP</i></div>
+<div class="sub">LOADING…</div>
+</div>
+<script>window.__ld0=Date.now();</script>
 <div class="col">
   <div class="top"><span class="lg"><img class="wm" src="img/logo-wordmark.png" alt="Sobamap" width="150" height="25"></span><span>そば・うどん記録</span></div>
   <p class="lead">行った店のレポと、まだ行っていない店のリストを、一枚の地図で。</p>
@@ -123,13 +159,6 @@ h2.map{margin:0;font-size:32px}
 
 <div class="col flush">
   <div class="hero mos" id="hero">
-    <a href="#oniyanma-ochanomizu" aria-label="おにやんま 御茶ノ水店へ">
-      <img src="img/oniyanma-ochanomizu.jpg" alt="特上天ぷらうどん">
-      <span class="vt">御茶ノ水</span>
-      <span class="hcap"><span class="hs">おにやんま 御茶ノ水店</span><span class="hd2">特上天ぷらうどん（温・大）</span></span>
-    </a>
-    <a href="#marebito" aria-label="まれびとへ"><img src="img/marebito.jpg" alt="十割そば＆とり天のセット"></a>
-    <a href="#baso-omotesando" aria-label="BASO 表参道へ"><img src="img/baso-omotesando.jpg" alt="つけSOBA"></a>
   </div>
   <div class="hb"><span>訪問済み <b id="cnt-v">–</b></span><span>行きたい <b id="cnt-w">–</b></span><span>全 <b id="cnt-t">–</b> 軒</span></div>
 </div>
@@ -336,11 +365,15 @@ function heroShuffle() {
   const tile = (s, k) => `<a href="#${esc(s.id)}" aria-label="${esc(s.name)}へ"><img src="${esc(s.photo)}" alt="${esc(s.dish || s.name)}">${k ? "" : `<span class="vt">${esc(s.area)}</span>`}${cap(s, k)}</a>`;
   h.innerHTML = tile(a, 0) + [b, c].filter(Boolean).map(s => tile(s, 1)).join("");
 }
+function ldDone(){
+  const e = document.getElementById("ld"); if (!e) return;
+  setTimeout(() => { e.classList.add("out"); setTimeout(() => e.remove(), 450); }, Math.max(0, 1700 - (Date.now() - window.__ld0)));
+}
 fetch("data.json").then(r => r.json()).then(d => {
   SHOPS = d.shops || [];
-  heroShuffle();
-  render();
+  try { heroShuffle(); render(); } finally { ldDone(); }
 }).catch(() => {
+  ldDone();
   document.getElementById("sections").innerHTML = `<p class="loadmsg">data.json を読み込めませんでした。ローカルで見る場合は http サーバ経由で開いてください（README参照）。</p>`;
 });
 </script>
